@@ -1,0 +1,15 @@
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.csproj.AssemblyReference.cache
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.AssemblyInfoInputs.cache
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.AssemblyInfo.cs
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.csproj.CoreCompileInputs.cache
+C:\Workspace\BE\ReservasApi\Application\bin\Debug\net6.0\Application.deps.json
+C:\Workspace\BE\ReservasApi\Application\bin\Debug\net6.0\Application.dll
+C:\Workspace\BE\ReservasApi\Application\bin\Debug\net6.0\Application.pdb
+C:\Workspace\BE\ReservasApi\Application\bin\Debug\net6.0\Data.dll
+C:\Workspace\BE\ReservasApi\Application\bin\Debug\net6.0\Data.pdb
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.csproj.CopyComplete
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.dll
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\refint\Application.dll
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\Application.pdb
+C:\Workspace\BE\ReservasApi\Application\obj\Debug\net6.0\ref\Application.dll
