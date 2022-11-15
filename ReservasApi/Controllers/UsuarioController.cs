@@ -1,7 +1,4 @@
 using Application.Interfaces;
-using Data;
-using Data.Entities;
-using Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using ReservasApi.ViewModels;
 
@@ -16,6 +13,8 @@ namespace ReservasApi.Controllers
         {
             _usuarioApplication = usuarioApplication;
         }
+
+        //Endpoint de validação.
         [HttpGet("")]
         public IActionResult BuscarTodosUsuarios()
         {
@@ -29,6 +28,9 @@ namespace ReservasApi.Controllers
             }
         }
 
+
+       
+        // Endpoint de validação.
         [HttpPost("")]
         public IActionResult InserirUsuario([FromBody] UsuarioViewModel usuarioViewModel)
         {
@@ -47,6 +49,19 @@ namespace ReservasApi.Controllers
             try
             {
                 return Ok(_usuarioApplication.Cadastro(cadastroViewModel.UsuarioNome, cadastroViewModel.Email, cadastroViewModel.Senha));
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpGet("login")]
+        public IActionResult Login([FromQuery] LoginViewModel loginViewModel)
+        {
+            try
+            {
+                return Ok(_usuarioApplication.Login(loginViewModel.Email, loginViewModel.Senha));
             }
             catch (Exception e)
             {

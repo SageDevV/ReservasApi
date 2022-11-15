@@ -21,33 +21,40 @@ namespace Application.Services
 
         public string InserirUsuario(string usuarioNome, string email)
         {
-            if (_usuarioRepository.BuscarUsuarioPorEmailENome(email, usuarioNome) is not null)
-                return "Já existe um usuário para esse email e nome";
+            if (_usuarioRepository.BuscarUsuarioPorEmailNome(email, usuarioNome) is not null)
+                return "Já existe um usuário para esse email e nome.";
 
-            if (_usuarioRepository.InserirUsuario(usuarioNome, email))
-                return "Usuario inserido com sucesso";
+            if (_usuarioRepository.InserirUsuario(usuarioNome))
+                return "Usuario inserido com sucesso.";
 
             throw new ArgumentException("Não foi possivel inserir o usuário.");
         }
 
         public string Cadastro(string usuarioNome, string email, string senha)
         {
-            if (_cadastroRepository.BuscarUsuarioCadastradoPorSenhaENome(email, senha) is not null)
+            if (_cadastroRepository.BuscarUsuarioCadastradoPorSenhaNome(email, senha) is not null)
                 return "Usuario já cadastrado, realize o login por favor.";
 
-            var usuario = _usuarioRepository.BuscarUsuarioPorEmailENome(usuarioNome, email);
+            var usuario = _usuarioRepository.BuscarUsuarioPorNome(usuarioNome);
 
             if (usuario is not null)
             {
-                _cadastroRepository.CadastrarUsuario(usuario.Id, senha);
-                return "Usuario cadastrado com sucesso";
+                _cadastroRepository.CadastrarUsuario(usuario.Id, email, senha);
+                return "Usuario cadastrado com sucesso.";
             }
 
-            _usuarioRepository.InserirUsuario(usuarioNome, email);
-            var usuarioCadastrado = _usuarioRepository.BuscarUsuarioPorEmailENome(email, usuarioNome);
-            _cadastroRepository.CadastrarUsuario(usuarioCadastrado.Id, senha);
-            return "Usuario cadastrado com sucesso";
+            _usuarioRepository.InserirUsuario(usuarioNome);
+            var usuarioCriado = _usuarioRepository.BuscarUsuarioPorNome(usuarioNome);
+            _cadastroRepository.CadastrarUsuario(usuarioCriado.Id, email, senha);
+            return "Usuario cadastrado com sucesso.";
+        }
 
+        public string Login(string email, string senha)
+        {
+            if (_cadastroRepository.BuscarCadastroPorSenhaEmail(senha, email) is null)
+                return "Usuário não cadastrado.";
+
+            return "Usuário encontrado.";
         }
     }
 }

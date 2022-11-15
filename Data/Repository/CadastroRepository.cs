@@ -11,11 +11,11 @@ namespace Data.Repository
             _dapperConfig = dapperConfig;
         }
 
-        public Cadastro BuscarUsuarioCadastradoPorSenhaENome(string email, string senha)
+        public Cadastro BuscarUsuarioCadastradoPorSenhaNome(string email, string senha)
         {
-            string query = @"SELECT c.Matricula FROM Cadastro c 
+            string query = @"SELECT * FROM Cadastro c 
                             INNER JOIN Usuario u ON u.Id = c.IdUsuario
-                            WHERE u.Email = @Email AND c.Senha = @Senha";
+                            WHERE c.Email = @Email AND c.Senha = @Senha";
 
             object param = new
             {
@@ -26,16 +26,31 @@ namespace Data.Repository
             return _dapperConfig.Query(query, param).FirstOrDefault();
         }
 
-        public bool CadastrarUsuario(int idUsuario, string senha)
+        public bool CadastrarUsuario(int idUsuario, string email, string senha)
         {
-            string query = @"INSERT INTO Cadastro (IdUsuario, Senha) 
-                             VALUES (@IdUsuario, @Senha)";
+            string query = @"INSERT INTO Cadastro (IdUsuario, Email, Senha, DataCadastro) 
+                             VALUES (@IdUsuario, @Email , @Senha, GETDATE())";
             object param = new
             {
                 IdUsuario = idUsuario,
+                Email = email,
                 Senha = senha
             };
             return true ? _dapperConfig.Insert(query, param) > 0 : throw new ArgumentException("Não foi possível inserir o cadastro do usuário.");
+        }
+
+        public Cadastro BuscarCadastroPorSenhaEmail(string senha, string email)
+        {
+            string query = @"SELECT * FROM Cadastro c 
+                             WHERE c.Senha = @Senha AND C.Email = @Email";
+
+            object param = new
+            {
+                Senha = senha,
+                Email = email
+            };
+
+            return _dapperConfig.Query(query, param).FirstOrDefault();
         }
     }
 }

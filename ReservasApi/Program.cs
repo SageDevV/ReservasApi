@@ -24,6 +24,9 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
     builder.Services.AddScoped<IUsuarioApplication, UsuarioApplication>();
     builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
+
+    builder.Services.AddScoped<ISalaRepository, SalaRepository>();
+    builder.Services.AddScoped<IReservaApplication, ReservaApplication>();
 }
 
 app.UseHttpsRedirection();

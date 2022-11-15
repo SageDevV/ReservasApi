@@ -7,5 +7,6 @@ namespace Application.Interfaces
         public IEnumerable<Usuario> BuscarTodosUsuarios();
         public string InserirUsuario(string usuarioNome, string email);
         public string Cadastro(string usuarioNome, string email, string senha);
+        public string Login(string email, string senha);
     }
 }
