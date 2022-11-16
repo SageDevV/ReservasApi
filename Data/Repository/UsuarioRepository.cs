@@ -52,5 +52,17 @@ namespace Data.Repository
             };
             return _dapperConfig.Query(query, param).FirstOrDefault();
         }
+
+        public Usuario VerificaPrivilegioUsuario(int idUsuario)
+        {
+            string query = "SELECT * FROM Usuario u WHERE u.Id = @IdUsuario";
+
+            object param = new
+            {
+                idUsuario = idUsuario,
+            };
+
+            return _dapperConfig.Query(query, param).FirstOrDefault();
+        }
     }
 }

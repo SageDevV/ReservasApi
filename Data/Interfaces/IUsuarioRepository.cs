@@ -8,5 +8,6 @@ namespace Data.Interfaces
         bool InserirUsuario(string usuarioNome);
         public Usuario BuscarUsuarioPorEmailNome(string email, string usuarioNome);
         public Usuario BuscarUsuarioPorNome(string usuarioNome);
+        Usuario VerificaPrivilegioUsuario(int idUsuario);
     }
 }

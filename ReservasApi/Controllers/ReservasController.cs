@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ReservasApi.ViewModels;
 
 namespace ReservasApi.Controllers
 {
@@ -8,7 +9,7 @@ namespace ReservasApi.Controllers
     public class ReservasController : ControllerBase
     {
         private readonly IReservaApplication _reservaApplication;
-        public ReservasController(IReservaApplication reservaApplication) 
+        public ReservasController(IReservaApplication reservaApplication)
         {
             _reservaApplication = reservaApplication;
         }
@@ -64,6 +65,22 @@ namespace ReservasApi.Controllers
                 throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
             }
         }
+
+        [HttpPost]
+        public IActionResult CriarReserva([FromBody] ReservaViewModel reservaViewModel)
+        {
+            try
+            {
+                return Ok(_reservaApplication.CriarReserva(reservaViewModel.IdSala, reservaViewModel.IdSolicitante, reservaViewModel.DataReserva));
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+            
 
     }
 }

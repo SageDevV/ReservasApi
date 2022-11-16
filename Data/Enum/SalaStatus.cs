@@ -2,7 +2,7 @@
 
 namespace Data.Enum
 {
-    public enum SalaStatus : short
+    public enum SalaStatus : int
     {
         [Description("Não reservado")]
         NaoReservado = 0,

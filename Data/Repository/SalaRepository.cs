@@ -101,5 +101,32 @@ namespace Data.Repository
 
             return _dapperConfig.Query(query, param);
         }
+
+        public void CriarReserva(int idSala, int idSolicitante, string dataReserva)
+        {
+            string query = @"INSERT INTO Reservas (IdSala, IdSolicitante, PeriodoReserva)
+                             VALUES (@IdSala, @IdSolicitante, @PeriodoReserva)";
+
+            object param = new
+            {
+                IdSala = idSala,
+                IdSolicitante = idSolicitante,
+                PeriodoReserva = dataReserva
+            };
+
+            _dapperConfig.Insert(query, param);
+        }
+
+        public Sala BuscarSalaPorId(int idSala)
+        {
+            string query = "SELECT * FROM SALA WHERE Id = @IdSala";
+
+            object param = new
+            {
+                IdSala = idSala
+            };
+
+            return _dapperConfig.Query(query, param).FirstOrDefault();
+        }
     }
 }
