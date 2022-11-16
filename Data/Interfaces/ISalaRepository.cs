@@ -4,6 +4,9 @@ namespace Data.Interfaces
 {
     public interface ISalaRepository
     {
-        public IEnumerable<Sala> BuscarTodasSalas();
+        IEnumerable<Sala> BuscarTodasSalas(string? bloco);
+        IEnumerable<Sala> BuscarTodasSalasAguardandoAprovacao(string? bloco);
+        IEnumerable<Sala> BuscarTodasSalasNaoReservadas(string? bloco);
+        IEnumerable<Sala> BuscarTodasSalasReservadas(string? bloco);
     }
 }

@@ -6,6 +6,8 @@ namespace Data.Enum
     {
         [Description("Aprovado")]
         Aprovado = 0,
+
+        [Description("Reprovado")]
         Reprovado = 1
     }
 }

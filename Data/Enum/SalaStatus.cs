@@ -6,6 +6,11 @@ namespace Data.Enum
     {
         [Description("Não reservado")]
         NaoReservado = 0,
-        Reservado = 1
+
+        [Description("Reservado")]
+        Reservado = 1,
+
+        [Description("Aguardando aprovação")]
+        AguardandoAprovacao = 2
     }
 }
