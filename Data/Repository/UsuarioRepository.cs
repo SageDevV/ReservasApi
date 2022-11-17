@@ -23,7 +23,7 @@ namespace Data.Repository
             {
                 NomeUsuario = usuarioNome,
             };
-            return true ? _dapperConfig.Insert(query, param) > 0 : throw new ArgumentException("Não foi possível inserir o usuário.");
+            return true ? _dapperConfig.Execute(query, param) > 0 : throw new ArgumentException("Não foi possível inserir o usuário.");
         }
 
         public Usuario BuscarUsuarioPorEmailNome(string usuarioNome, string email)

@@ -19,7 +19,7 @@ namespace Data
             return connection.Query<T>(query, param);
         }
 
-        public int Insert(string query, object param)
+        public int Execute(string query, object param)
         {
             using var connection = new SqlConnection(_configuration.GetConnectionString("Reservas"));
             var affectedRows = connection.Execute(query, param);

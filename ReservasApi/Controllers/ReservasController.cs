@@ -66,7 +66,7 @@ namespace ReservasApi.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost("reserva")]
         public IActionResult CriarReserva([FromBody] ReservaViewModel reservaViewModel)
         {
             try
@@ -80,7 +80,18 @@ namespace ReservasApi.Controllers
             }
         }
 
-            
+        [HttpDelete("reserva")]
+        public IActionResult DesfazerReserva([FromQuery] int idSala, int idSolicitante)
+        {
+            try
+            {
+                return Ok(_reservaApplication.DesfazerReserva(idSala, idSolicitante));
+            }
+            catch (Exception e)
+            {
 
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
     }
 }

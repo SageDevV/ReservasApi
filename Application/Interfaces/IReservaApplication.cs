@@ -9,5 +9,6 @@ namespace Application.Interfaces
         IEnumerable<Sala> BuscarTodasSalasNaoReservadas(string? bloco);
         IEnumerable<Sala> BuscarTodasSalasReservadas(string? bloco);
         string CriarReserva(int idSala, int idSolicitante, string dataReserva);
+        string DesfazerReserva(int idSala, int idSolicitante);
     }
 }

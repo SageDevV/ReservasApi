@@ -2,6 +2,7 @@
 using Data.Entities;
 using Data.Enum;
 using Data.Interfaces;
+using System.Data;
 
 namespace Application.Services
 {
@@ -51,8 +52,32 @@ namespace Application.Services
                 return "O status da sala não pode ser diferente de não reservado";
 
             _salaRepository.CriarReserva(sala.Id, usuario.Id, dataReserva);
+
+            _salaRepository.AlterarStatusSalaAguardandoAprovacao(sala.Id);
                 
             return "Sala criada com sucesso.";
+        }
+
+        public string DesfazerReserva(int idSala, int idSolicitante)
+        {
+            var usuario = _usuarioRepository.VerificaPrivilegioUsuario(idSolicitante);
+
+            if (usuario.Privilegio == (int)Privilegio.Aprovador)
+                return "Usuario com privilegios errados.";
+
+            var sala = _salaRepository.BuscarSalaPorId(idSala);
+
+            if (sala is null)
+                return "A sala informada não consta na base de dados.";
+
+            if (sala.Status != ((int)SalaStatus.AguardandoAprovacao) && sala.Status != ((int)SalaStatus.Reservado))
+                return "O status da sala informada não está reservada ou aguardando aprovação.";
+
+            _salaRepository.AlterarStatusSalaNaoReservado(sala.Id);
+
+            _salaRepository.DeleteReservaIdSala(sala.Id);
+
+            return "Reserva deletada com sucesso";
         }
     }
 }

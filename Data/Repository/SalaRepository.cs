@@ -36,7 +36,7 @@ namespace Data.Repository
 
         public IEnumerable<Sala> BuscarTodasSalasAguardandoAprovacao(string? bloco)
         {
-            string query; 
+            string query;
             if (bloco is null)
             {
                 query = $@"SELECT * FROM Sala s
@@ -114,7 +114,7 @@ namespace Data.Repository
                 PeriodoReserva = dataReserva
             };
 
-            _dapperConfig.Insert(query, param);
+            _dapperConfig.Execute(query, param);
         }
 
         public Sala BuscarSalaPorId(int idSala)
@@ -127,6 +127,48 @@ namespace Data.Repository
             };
 
             return _dapperConfig.Query(query, param).FirstOrDefault();
+        }
+
+        public void AlterarStatusSalaAguardandoAprovacao(int idSala)
+        {
+            string query = $@"UPDATE Sala
+                             SET Status = {(int)SalaStatus.AguardandoAprovacao}
+                             WHERE Id = @IdSala";
+
+            object param = new
+            {
+                IdSala = idSala
+            };
+
+            _dapperConfig.Execute(query, param);
+        }
+
+        public void AlterarStatusSalaNaoReservado(int idSala)
+        {
+            string query = $@"UPDATE Sala
+                             SET Status = {((int)SalaStatus.NaoReservado)}
+                             WHERE Id = @IdSala";
+
+            object param = new
+            {
+                idSala = idSala
+            };
+
+            _dapperConfig.Execute(query, param);
+
+        }
+
+        public void DeleteReservaIdSala(int idSala)
+        {
+            string query = @"DELETE FROM Reservas
+                             WHERE IdSala = @IdSala";
+
+            object param = new
+            {
+                IdSala = idSala
+            };
+
+            _dapperConfig.Execute(query, param);
         }
     }
 }
