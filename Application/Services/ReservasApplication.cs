@@ -6,14 +6,36 @@ using System.Data;
 
 namespace Application.Services
 {
-    public class ReservaApplication : IReservaApplication
+    public class SalaReservaApplication : ISalaReservaApplication
     {
         private readonly ISalaRepository _salaRepository;
         private readonly IUsuarioRepository _usuarioRepository;
-        public ReservaApplication(ISalaRepository salaRepository, IUsuarioRepository usuarioRepository)
+        private readonly IReservaRepository _reservaRepository;
+        public SalaReservaApplication(ISalaRepository salaRepository, IUsuarioRepository usuarioRepository, IReservaRepository reservaRepository)
         {
             _salaRepository = salaRepository;
             _usuarioRepository = usuarioRepository;
+            _reservaRepository = reservaRepository;
+        }
+
+        public string AprovarReserva(int idReserva, int idAprovador)
+        {
+            var usuario = _usuarioRepository.VerificaPrivilegioUsuario(idAprovador);
+
+            if (usuario.Privilegio != 1)
+                return "Usuário com privilégios errados.";
+
+            var reserva = _reservaRepository.BuscarReservaPorId(idReserva);
+
+            if (reserva is null)
+                return "A reserva não foi encontrada na base de dados.";
+
+            if (reserva.IdSolicitante is default(int))
+                return "A reserva foi solicitada de maneira incorreta. Solicitante não encontrado.";
+
+            _reservaRepository.AprovarReserva(reserva.Id, idAprovador);
+
+            return "Reserva aprovada com sucesso";
         }
 
         public IEnumerable<Sala> BuscarTodasSalas(string? bloco)
@@ -51,11 +73,11 @@ namespace Application.Services
             if (sala.Status == (int)SalaStatus.Reservado || sala.Status == (int)SalaStatus.AguardandoAprovacao)
                 return "O status da sala não pode ser diferente de não reservado";
 
-            _salaRepository.CriarReserva(sala.Id, usuario.Id, dataReserva);
+            _reservaRepository.CriarReserva(sala.Id, usuario.Id, dataReserva);
 
             _salaRepository.AlterarStatusSalaAguardandoAprovacao(sala.Id);
                 
-            return "Sala criada com sucesso.";
+            return "Reserva criada com sucesso.";
         }
 
         public string DesfazerReserva(int idSala, int idSolicitante)
@@ -75,9 +97,29 @@ namespace Application.Services
 
             _salaRepository.AlterarStatusSalaNaoReservado(sala.Id);
 
-            _salaRepository.DeleteReservaIdSala(sala.Id);
+            _reservaRepository.DeleteReservaIdSala(sala.Id);
 
             return "Reserva deletada com sucesso";
+        }
+
+        public string ReprovarReserva(int idReserva, int idAprovador)
+        {
+            var usuario = _usuarioRepository.VerificaPrivilegioUsuario(idAprovador);
+
+            if (usuario.Privilegio != 1)
+                return "Usuário com privilégios errados.";
+
+            var reserva = _reservaRepository.BuscarReservaPorId(idReserva);
+
+            if (reserva is null)
+                return "A reserva não foi encontrada na base de dados.";
+
+            if (reserva.IdSolicitante is default(int))
+                return "A reserva foi solicitada de maneira incorreta. Solicitante não encontrado.";
+
+            _reservaRepository.ReprovarReserva(reserva.Id, idAprovador);
+
+            return "Reserva reprovada com sucesso";
         }
     }
 }

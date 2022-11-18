@@ -6,10 +6,10 @@ namespace ReservasApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ReservasController : ControllerBase
+    public class SalaReservasController : ControllerBase
     {
-        private readonly IReservaApplication _reservaApplication;
-        public ReservasController(IReservaApplication reservaApplication)
+        private readonly ISalaReservaApplication _reservaApplication;
+        public SalaReservasController(ISalaReservaApplication reservaApplication)
         {
             _reservaApplication = reservaApplication;
         }
@@ -86,6 +86,34 @@ namespace ReservasApi.Controllers
             try
             {
                 return Ok(_reservaApplication.DesfazerReserva(idSala, idSolicitante));
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpPut("reserva/aprovacao")]
+        public IActionResult AprovarReserva([FromQuery] int idReserva, int idAprovador)
+        {
+            try
+            {
+                return Ok(_reservaApplication.AprovarReserva(idReserva, idAprovador));
+            }
+            catch (Exception e)
+            {
+
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpPut("reserva/reprovacao")]
+        public IActionResult ReprovarReserva([FromQuery] int idReserva, int idAprovador)
+        {
+            try
+            {
+                return Ok(_reservaApplication.ReprovarReserva(idReserva, idAprovador));
             }
             catch (Exception e)
             {

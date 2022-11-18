@@ -19,23 +19,14 @@ namespace Application.Services
             return _usuarioRepository.BuscarTodosUsuarios();
         }
 
-        public string InserirUsuario(string usuarioNome, string email)
+        public string Cadastro(string usuarioNome, string email, string senha, int privilegios)
         {
-            if (_usuarioRepository.BuscarUsuarioPorEmailNome(email, usuarioNome) is not null)
-                return "Já existe um usuário para esse email e nome.";
+            var usuarioCadastrado = _cadastroRepository.BuscarUsuarioCadastradoPorSenhaNome(email, senha);
 
-            if (_usuarioRepository.InserirUsuario(usuarioNome))
-                return "Usuario inserido com sucesso.";
-
-            throw new ArgumentException("Não foi possivel inserir o usuário.");
-        }
-
-        public string Cadastro(string usuarioNome, string email, string senha)
-        {
-            if (_cadastroRepository.BuscarUsuarioCadastradoPorSenhaNome(email, senha) is not null)
+            if (usuarioCadastrado is not null)
                 return "Usuario já cadastrado, realize o login por favor.";
 
-            var usuario = _usuarioRepository.BuscarUsuarioPorNome(usuarioNome);
+            var usuario = _usuarioRepository.BuscarUsuarioPorEmailNome(usuarioNome, email);
 
             if (usuario is not null)
             {
@@ -43,9 +34,8 @@ namespace Application.Services
                 return "Usuario cadastrado com sucesso.";
             }
 
-            _usuarioRepository.InserirUsuario(usuarioNome);
-            var usuarioCriado = _usuarioRepository.BuscarUsuarioPorNome(usuarioNome);
-            _cadastroRepository.CadastrarUsuario(usuarioCriado.Id, email, senha);
+            var usuarioId = CriarUsuario(usuarioNome, privilegios);
+            _cadastroRepository.CadastrarUsuario(usuarioId, email, senha);
             return "Usuario cadastrado com sucesso.";
         }
 
@@ -55,6 +45,12 @@ namespace Application.Services
                 return "Usuário não cadastrado.";
 
             return "Usuário encontrado.";
+        }
+
+        private int CriarUsuario(string nome, int privilegios)
+        {
+           _usuarioRepository.InserirUsuario(nome, privilegios);
+            return _usuarioRepository.RetornarUltimoIdCriadoUsuario();
         }
     }
 }

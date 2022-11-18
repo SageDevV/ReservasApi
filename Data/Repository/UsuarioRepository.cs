@@ -16,14 +16,22 @@ namespace Data.Repository
             string query = "SELECT * FROM Usuario";
             return _dapperConfig.Query(query);
         }
-        public bool InserirUsuario(string usuarioNome)
+        public bool InserirUsuario(string usuarioNome, int privilegios)
         {
-            string query = "INSERT INTO Usuario (NomeUsuario) VALUES (@NomeUsuario)";
+            string query = "INSERT INTO Usuario (NomeUsuario, Privilegio) VALUES (@NomeUsuario, @Privilegio)";
             var param = new
             {
                 NomeUsuario = usuarioNome,
+                Privilegio = privilegios
             };
             return true ? _dapperConfig.Execute(query, param) > 0 : throw new ArgumentException("Não foi possível inserir o usuário.");
+        }
+
+        public int RetornarUltimoIdCriadoUsuario()
+        {
+            string query = "SELECT TOP 1 ID FROM Usuario ORDER BY Id DESC";
+
+            return _dapperConfig.Query(query).FirstOrDefault().Id;
         }
 
         public Usuario BuscarUsuarioPorEmailNome(string usuarioNome, string email)
@@ -49,6 +57,18 @@ namespace Data.Repository
             object param = new
             {
                 UsuarioNome = usuarioNome,
+            };
+            return _dapperConfig.Query(query, param).FirstOrDefault();
+        }
+
+        public Usuario BuscarUsuarioPorId(int idUsuario)
+        {
+            string query = @"SELECT * FROM Usuario u
+                             WHERE u.Id = @IdUsuario";
+
+            object param = new
+            {
+                IdUsuario = idUsuario,
             };
             return _dapperConfig.Query(query, param).FirstOrDefault();
         }

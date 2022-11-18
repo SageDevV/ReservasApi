@@ -102,21 +102,6 @@ namespace Data.Repository
             return _dapperConfig.Query(query, param);
         }
 
-        public void CriarReserva(int idSala, int idSolicitante, string dataReserva)
-        {
-            string query = @"INSERT INTO Reservas (IdSala, IdSolicitante, PeriodoReserva)
-                             VALUES (@IdSala, @IdSolicitante, @PeriodoReserva)";
-
-            object param = new
-            {
-                IdSala = idSala,
-                IdSolicitante = idSolicitante,
-                PeriodoReserva = dataReserva
-            };
-
-            _dapperConfig.Execute(query, param);
-        }
-
         public Sala BuscarSalaPorId(int idSala)
         {
             string query = "SELECT * FROM SALA WHERE Id = @IdSala";
@@ -156,19 +141,6 @@ namespace Data.Repository
 
             _dapperConfig.Execute(query, param);
 
-        }
-
-        public void DeleteReservaIdSala(int idSala)
-        {
-            string query = @"DELETE FROM Reservas
-                             WHERE IdSala = @IdSala";
-
-            object param = new
-            {
-                IdSala = idSala
-            };
-
-            _dapperConfig.Execute(query, param);
         }
     }
 }

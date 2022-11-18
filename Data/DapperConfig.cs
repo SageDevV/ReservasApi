@@ -25,5 +25,6 @@ namespace Data
             var affectedRows = connection.Execute(query, param);
             return affectedRows;
         }
+
     }
 }

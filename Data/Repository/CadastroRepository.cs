@@ -34,7 +34,7 @@ namespace Data.Repository
             {
                 IdUsuario = idUsuario,
                 Email = email,
-                Senha = senha
+                Senha = senha,
             };
             return true ? _dapperConfig.Execute(query, param) > 0 : throw new ArgumentException("Não foi possível inserir o cadastro do usuário.");
         }

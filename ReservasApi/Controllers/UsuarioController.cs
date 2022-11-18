@@ -14,41 +14,12 @@ namespace ReservasApi.Controllers
             _usuarioApplication = usuarioApplication;
         }
 
-        //Endpoint de validação.
-        [HttpGet("")]
-        public IActionResult BuscarTodosUsuarios()
-        {
-            try
-            {
-                return Ok(_usuarioApplication.BuscarTodosUsuarios());
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
-            }
-        }
-
-
-       
-        // Endpoint de validação.
-        [HttpPost("")]
-        public IActionResult InserirUsuario([FromBody] UsuarioViewModel usuarioViewModel)
-        {
-            try
-            {
-                return Ok(_usuarioApplication.InserirUsuario(usuarioViewModel.NomeUsuario, usuarioViewModel.Email));
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
-            }
-        }
         [HttpPost("cadastro")]
         public IActionResult Cadastro([FromBody] CadastroViewModel cadastroViewModel)
         {
             try
             {
-                return Ok(_usuarioApplication.Cadastro(cadastroViewModel.UsuarioNome, cadastroViewModel.Email, cadastroViewModel.Senha));
+                return Ok(_usuarioApplication.Cadastro(cadastroViewModel.UsuarioNome, cadastroViewModel.Email, cadastroViewModel.Senha, cadastroViewModel.Privilegios));;
             }
             catch (Exception e)
             {
