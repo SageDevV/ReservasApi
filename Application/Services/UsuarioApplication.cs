@@ -39,12 +39,14 @@ namespace Application.Services
             return "Usuario cadastrado com sucesso.";
         }
 
-        public string Login(string email, string senha)
+        public Usuario Login(string email, string senha)
         {
-            if (_cadastroRepository.BuscarCadastroPorSenhaEmail(senha, email) is null)
-                return "Usuário não cadastrado.";
+            var usuarioCadastrado = _cadastroRepository.BuscarCadastroPorSenhaEmail(senha, email);
 
-            return "Usuário encontrado.";
+            if (usuarioCadastrado is null)
+                throw new ArgumentException("Usuário não cadastrado.");
+
+            return _usuarioRepository.BuscarUsuarioPorId(usuarioCadastrado.IdUsuario);
         }
 
         private int CriarUsuario(string nome, int privilegios)

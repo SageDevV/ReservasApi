@@ -1,4 +1,5 @@
-﻿using Data.Entities;
+﻿using Application.Services;
+using Data.Entities;
 
 namespace Application.Interfaces
 {
@@ -6,6 +7,6 @@ namespace Application.Interfaces
     {
         public IEnumerable<Usuario> BuscarTodosUsuarios();
         string Cadastro(string usuarioNome, string email, string senha, int privilegios);
-        public string Login(string email, string senha);
+        public Usuario Login(string email, string senha);
     }
 }
