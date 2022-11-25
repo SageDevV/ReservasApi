@@ -9,5 +9,8 @@ namespace Data.Interfaces
         void AprovarReserva(int idReserva, int idAprovador);
         void CriarReserva(int idSala, int idSolicitante, string dataReserva);
         void ReprovarReserva(int idReserva, int idAprovador);
+        IEnumerable<Reserva> BuscarTodasReservaPorBloco(string bloco);
+
+
     }
 }

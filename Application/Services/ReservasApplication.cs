@@ -2,7 +2,6 @@
 using Data.Entities;
 using Data.Enum;
 using Data.Interfaces;
-using System.Data;
 
 namespace Application.Services
 {
@@ -40,7 +39,8 @@ namespace Application.Services
 
         public IEnumerable<Sala> BuscarTodasSalas(string? bloco)
         {
-            return _salaRepository.BuscarTodasSalas(bloco);
+            var result = _salaRepository.BuscarTodasSalas(bloco);
+            return result;
         }
 
         public IEnumerable<Sala> BuscarTodasSalasAguardandoAprovacao(string? bloco)
@@ -53,9 +53,17 @@ namespace Application.Services
             return _salaRepository.BuscarTodasSalasNaoReservadas(bloco);
         }
 
-        public IEnumerable<Sala> BuscarTodasSalasReservadas(string? bloco)
+        public IEnumerable<Reserva> BuscarTodasReservaPorBloco(string? bloco)
         {
-            return _salaRepository.BuscarTodasSalasReservadas(bloco);
+            var reservas = _reservaRepository.BuscarTodasReservaPorBloco(bloco);
+            foreach(var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
         }
 
         public string CriarReserva(int idSala, int idSolicitante, string dataReserva)
@@ -63,7 +71,7 @@ namespace Application.Services
             var usuario = _usuarioRepository.VerificaPrivilegioUsuario(idSolicitante);
 
             if (usuario.Privilegio == (int)Privilegio.Aprovador)
-                return "Usuario com privilegios errados.";
+                throw new ArgumentException("Usuario com privilegios incorretos.");
 
             var sala = _salaRepository.BuscarSalaPorId(idSala);
 
@@ -120,6 +128,11 @@ namespace Application.Services
             _reservaRepository.ReprovarReserva(reserva.Id, idAprovador);
 
             return "Reserva reprovada com sucesso";
+        }
+
+        public IEnumerable<Sala> BuscarTodasSalasReservadas(string? bloco)
+        {
+            throw new NotImplementedException();
         }
     }
 }

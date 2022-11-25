@@ -8,5 +8,7 @@
         public int IdAprovador { get; set; }
         public int Status { get; set; }
         public string PeriodoReserva { get; set; }
+        public string Data { get; set; }
+        public string RangeHora { get; set; }
     }
 }

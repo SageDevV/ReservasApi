@@ -28,11 +28,11 @@ namespace ReservasApi.Controllers
         }
 
         [HttpGet("salas-reservadas")]
-        public IActionResult BuscarTodasSalasReservadas([FromQuery] string? bloco)
+        public IActionResult BuscarTodasReservaPorBloco([FromQuery] string? bloco)
         {
             try
             {
-                return Ok(_reservaApplication.BuscarTodasSalasReservadas(bloco));
+                return Ok(_reservaApplication.BuscarTodasReservaPorBloco(bloco));
             }
             catch (Exception e)
             {

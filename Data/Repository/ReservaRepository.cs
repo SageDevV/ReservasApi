@@ -12,6 +12,21 @@ namespace Data.Repository
             _dapperConfig = dapperConfig;
         }
 
+        public IEnumerable<Reserva> BuscarTodasReservaPorBloco(string bloco)
+        {
+            string query = @"SELECT r.Status, r.PeriodoReserva FROM Reservas r
+                             INNER JOIN Sala s on s.Id = r.IdSala 
+                             INNER JOIN Bloco b on b.Id =  s.IdBloco 
+                             WHERE b.Nome = @Bloco";
+
+            object param = new
+            {
+                Bloco = bloco
+            };
+
+            return _dapperConfig.Query(query, param);
+        }
+
         public Reserva BuscarReservaPorId(int idReserva)
         {
             string query = @"SELECT * FROM Reservas
