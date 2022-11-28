@@ -133,7 +133,16 @@ namespace Application.Services
 
         public IEnumerable<Reserva> BuscarTodasReservas()
         {
-            return _reservaRepository.BuscarTodasReservas();
+            var reservas = _reservaRepository.BuscarTodasReservas();
+
+            foreach (var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
         }
     }
 }
