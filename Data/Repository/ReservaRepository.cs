@@ -99,5 +99,12 @@ namespace Data.Repository
 
             _dapperConfig.Execute(query, param);
         }
+
+        public IEnumerable<Reserva> BuscarTodasReservas()
+        {
+            string query = @"SELECT r.Status, r.PeriodoReserva FROM Reservas r";
+
+            return _dapperConfig.Query(query);
+        }
     }
 }

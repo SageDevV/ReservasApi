@@ -14,12 +14,25 @@ namespace ReservasApi.Controllers
             _reservaApplication = reservaApplication;
         }
 
-        [HttpGet("")]
+        [HttpGet("salas")]
         public IActionResult BuscarTodasSalas([FromQuery] string? bloco)
         {
             try
             {
                 return Ok(_reservaApplication.BuscarTodasSalas(bloco));
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpGet("reservas")]
+        public IActionResult BuscarTodasReservas()
+        {
+            try
+            {
+                return Ok(_reservaApplication.BuscarTodasReservas());
             }
             catch (Exception e)
             {

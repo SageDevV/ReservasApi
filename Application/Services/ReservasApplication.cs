@@ -130,9 +130,10 @@ namespace Application.Services
             return "Reserva reprovada com sucesso";
         }
 
-        public IEnumerable<Sala> BuscarTodasSalasReservadas(string? bloco)
+
+        public IEnumerable<Reserva> BuscarTodasReservas()
         {
-            throw new NotImplementedException();
+            return _reservaRepository.BuscarTodasReservas();
         }
     }
 }
