@@ -106,5 +106,37 @@ namespace Data.Repository
 
             return _dapperConfig.Query(query);
         }
+
+        public IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco)
+        {
+            string query = $@"SELECT r.Status, r.PeriodoReserva FROM Reservas r
+                             INNER JOIN Sala s on s.Id = r.IdSala 
+                             INNER JOIN Bloco b on b.Id =  s.IdBloco 
+                             WHERE b.Nome = @Bloco
+                             AND r.status = {((int)ReservaStatus.Aprovado)}";
+
+            object param = new
+            {
+                Bloco = bloco
+            };
+
+            return _dapperConfig.Query(query, param);
+        }
+
+        public IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco)
+        {
+            string query = $@"SELECT r.Status, r.PeriodoReserva FROM Reservas r
+                             INNER JOIN Sala s on s.Id = r.IdSala 
+                             INNER JOIN Bloco b on b.Id =  s.IdBloco 
+                             WHERE b.Nome = @Bloco
+                             AND r.status = {((int)ReservaStatus.Reprovado)}";
+
+            object param = new
+            {
+                Bloco = bloco
+            };
+
+            return _dapperConfig.Query(query, param);
+        }
     }
 }

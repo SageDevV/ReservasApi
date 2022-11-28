@@ -14,12 +14,12 @@ namespace ReservasApi.Controllers
             _reservaApplication = reservaApplication;
         }
 
-        [HttpGet("salas")]
-        public IActionResult BuscarTodasSalas([FromQuery] string? bloco)
+        [HttpGet("salas-disponiveis")]
+        public IActionResult BuscarTodasSalasDisponiveisPorBloco([FromQuery] string? bloco)
         {
             try
             {
-                return Ok(_reservaApplication.BuscarTodasSalas(bloco));
+                return Ok(_reservaApplication.BuscarTodasSalasDisponiveisPorBloco(bloco));
             }
             catch (Exception e)
             {
@@ -33,6 +33,32 @@ namespace ReservasApi.Controllers
             try
             {
                 return Ok(_reservaApplication.BuscarTodasReservas());
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpGet("reservas-aprovadas")]
+        public IActionResult BuscarTodasReservasAprovadasPorBloco([FromQuery] string? bloco)
+        {
+            try
+            {
+                return Ok(_reservaApplication.BuscarTodasReservasAprovadasPorBloco(bloco));
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
+        [HttpGet("reservas-reprovadas")]
+        public IActionResult BuscarTodasReservasReprovadasPorBloco([FromQuery] string? bloco)
+        {
+            try
+            {
+                return Ok(_reservaApplication.BuscarTodasReservasReprovadasPorBloco(bloco));
             }
             catch (Exception e)
             {

@@ -11,5 +11,7 @@ namespace Data.Interfaces
         void ReprovarReserva(int idReserva, int idAprovador);
         IEnumerable<Reserva> BuscarTodasReservaPorBloco(string bloco);
         IEnumerable<Reserva> BuscarTodasReservas();
+        IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco);
+        IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco);
     }
 }

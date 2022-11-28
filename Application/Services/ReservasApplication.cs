@@ -37,10 +37,9 @@ namespace Application.Services
             return "Reserva aprovada com sucesso";
         }
 
-        public IEnumerable<Sala> BuscarTodasSalas(string? bloco)
+        public IEnumerable<Sala> BuscarTodasSalasDisponiveisPorBloco(string? bloco)
         {
-            var result = _salaRepository.BuscarTodasSalas(bloco);
-            return result;
+            return _salaRepository.BuscarTodasSalasDisponiveisPorBloco(bloco);
         }
 
         public IEnumerable<Sala> BuscarTodasSalasAguardandoAprovacao(string? bloco)
@@ -134,6 +133,34 @@ namespace Application.Services
         public IEnumerable<Reserva> BuscarTodasReservas()
         {
             var reservas = _reservaRepository.BuscarTodasReservas();
+
+            foreach (var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
+        }
+
+        public IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco)
+        {
+            var reservas = _reservaRepository.BuscarTodasReservasAprovadasPorBloco(bloco);
+
+            foreach (var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
+        }
+
+        public IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco)
+        {
+            var reservas = _reservaRepository.BuscarTodasReservasReprovadasPorBloco(bloco);
 
             foreach (var reserva in reservas)
             {

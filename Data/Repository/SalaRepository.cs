@@ -12,7 +12,7 @@ namespace Data.Repository
             _dapperConfig = dapperConfig;
         }
 
-        public IEnumerable<Sala> BuscarTodasSalas(string? bloco)
+        public IEnumerable<Sala> BuscarTodasSalasDisponiveisPorBloco(string? bloco)
         {
             string query;
 
@@ -22,9 +22,10 @@ namespace Data.Repository
                 return _dapperConfig.Query(query);
             }
 
-            query = @"SELECT * FROM Sala s 
+            query = $@"SELECT * FROM Sala s 
                       INNER JOIN Bloco b ON b.Id = s.IdBloco 
-                      WHERE b.Nome = @Nome";
+                      WHERE b.Nome = @Nome
+                      AND s.Status = {((int)SalaStatus.NaoReservado)} ";
 
             object param = new
             {
