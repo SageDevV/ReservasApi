@@ -39,7 +39,12 @@ namespace Application.Services
 
         public IEnumerable<Sala> BuscarTodasSalasDisponiveisPorBloco(string? bloco)
         {
-            return _salaRepository.BuscarTodasSalasDisponiveisPorBloco(bloco);
+            var salas = _salaRepository.BuscarTodasSalasDisponiveisPorBloco(bloco);
+            foreach (var sala in salas)
+            {
+                sala.Status = 3;
+            }
+            return salas;
         }
 
         public IEnumerable<Sala> BuscarTodasSalasAguardandoAprovacao(string? bloco)
@@ -55,7 +60,7 @@ namespace Application.Services
         public IEnumerable<Reserva> BuscarTodasReservaPorBloco(string? bloco)
         {
             var reservas = _reservaRepository.BuscarTodasReservaPorBloco(bloco);
-            foreach(var reserva in reservas)
+            foreach (var reserva in reservas)
             {
                 string[] periodoReserva = reserva.PeriodoReserva.Split('=');
                 reserva.Data = periodoReserva[0];
@@ -74,7 +79,7 @@ namespace Application.Services
 
             var sala = _salaRepository.BuscarSalaPorId(idSala);
 
-            if (sala == null )
+            if (sala == null)
                 return "A sala informada não existe.";
 
             if (sala.Status == (int)SalaStatus.Reservado || sala.Status == (int)SalaStatus.AguardandoAprovacao)
@@ -83,7 +88,7 @@ namespace Application.Services
             _reservaRepository.CriarReserva(sala.Id, usuario.Id, dataReserva);
 
             _salaRepository.AlterarStatusSalaAguardandoAprovacao(sala.Id);
-                
+
             return "Reserva criada com sucesso.";
         }
 
@@ -161,6 +166,20 @@ namespace Application.Services
         public IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco)
         {
             var reservas = _reservaRepository.BuscarTodasReservasReprovadasPorBloco(bloco);
+
+            foreach (var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
+        }
+
+        public IEnumerable<Reserva> BuscarTodasReservasCriadasPeloSolicitante(int idSolicitante, string? bloco)
+        {
+            var reservas = _reservaRepository.BuscarTodasReservasCriadasPeloSolicitante(idSolicitante, bloco);
 
             foreach (var reserva in reservas)
             {

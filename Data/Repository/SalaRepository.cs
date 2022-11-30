@@ -18,7 +18,8 @@ namespace Data.Repository
 
             if (bloco is null)
             {
-                query = "SELECT * FROM Sala";
+                query = @$"SELECT * FROM Sala s
+                         WHERE s.Status = {((int)SalaStatus.NaoReservado)}";
                 return _dapperConfig.Query(query);
             }
 

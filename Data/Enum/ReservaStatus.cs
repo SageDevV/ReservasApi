@@ -8,6 +8,9 @@ namespace Data.Enum
         Aprovado = 0,
 
         [Description("Reprovado")]
-        Reprovado = 1
+        Reprovado = 1,
+
+        [Description("Aguardando aprovação")]
+        AguardandoAprovacao = 4,
     }
 }

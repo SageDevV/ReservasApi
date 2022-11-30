@@ -40,6 +40,19 @@ namespace ReservasApi.Controllers
             }
         }
 
+        [HttpGet("reservas-criadas-solicitante")]
+        public IActionResult BuscarTodasReservasCriadasPeloSolicitante([FromQuery] int idSolicitante, string? bloco)
+        {
+            try
+            {
+                return Ok(_reservaApplication.BuscarTodasReservasCriadasPeloSolicitante(idSolicitante, bloco));
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Houve um erro na realização da requisição. Detalhes: {e.Message}");
+            }
+        }
+
         [HttpGet("reservas-aprovadas")]
         public IActionResult BuscarTodasReservasAprovadasPorBloco([FromQuery] string? bloco)
         {

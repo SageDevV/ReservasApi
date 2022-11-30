@@ -71,8 +71,8 @@ namespace Data.Repository
 
         public void CriarReserva(int idSala, int idSolicitante, string dataReserva)
         {
-            string query = @"INSERT INTO Reservas (IdSala, IdSolicitante, PeriodoReserva)
-                             VALUES (@IdSala, @IdSolicitante, @PeriodoReserva)";
+            string query = $@"INSERT INTO Reservas (IdSala, IdSolicitante, Status, PeriodoReserva)
+                             VALUES (@IdSala, @IdSolicitante, {((int)ReservaStatus.AguardandoAprovacao)},  @PeriodoReserva)";
 
             object param = new
             {
@@ -133,6 +133,35 @@ namespace Data.Repository
 
             object param = new
             {
+                Bloco = bloco
+            };
+
+            return _dapperConfig.Query(query, param);
+        }
+
+        public IEnumerable<Reserva> BuscarTodasReservasCriadasPeloSolicitante(int idSolicitante, string? bloco)
+        {
+            string query;
+
+            if (bloco is not null)
+            {
+                query = $@"SELECT * FROM Reservas r
+                            INNER JOIN Sala s on s.Id = r.IdSala 
+                            INNER JOIN Bloco b on b.Id =  s.IdBloco
+                            WHERE r.Status = {((int)ReservaStatus.AguardandoAprovacao)}
+                            AND r.IdSolicitante = @IdSolicitante
+                            AND b.Nome = @Bloco";
+            }
+            else
+            {
+                query = $@"SELECT * FROM Reservas r
+                           WHERE r.Status = {((int)ReservaStatus.AguardandoAprovacao)}
+                           AND r.IdSolicitante = @IdSolicitante";
+            }
+
+            object param = new
+            {
+                IdSolicitante = idSolicitante,
                 Bloco = bloco
             };
 
