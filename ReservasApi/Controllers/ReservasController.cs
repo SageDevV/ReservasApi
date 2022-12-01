@@ -54,11 +54,11 @@ namespace ReservasApi.Controllers
         }
 
         [HttpGet("reservas-aprovadas")]
-        public IActionResult BuscarTodasReservasAprovadasPorBloco([FromQuery] string? bloco)
+        public IActionResult BuscarTodasReservasAprovadasPorBloco([FromQuery] string? bloco, int idSolicitante)
         {
             try
             {
-                return Ok(_reservaApplication.BuscarTodasReservasAprovadasPorBloco(bloco));
+                return Ok(_reservaApplication.BuscarTodasReservasAprovadasPorBloco(bloco, idSolicitante));
             }
             catch (Exception e)
             {
@@ -67,11 +67,11 @@ namespace ReservasApi.Controllers
         }
 
         [HttpGet("reservas-reprovadas")]
-        public IActionResult BuscarTodasReservasReprovadasPorBloco([FromQuery] string? bloco)
+        public IActionResult BuscarTodasReservasReprovadasPorBloco([FromQuery] string? bloco, int idSolicitante)
         {
             try
             {
-                return Ok(_reservaApplication.BuscarTodasReservasReprovadasPorBloco(bloco));
+                return Ok(_reservaApplication.BuscarTodasReservasReprovadasPorBloco(bloco, idSolicitante));
             }
             catch (Exception e)
             {

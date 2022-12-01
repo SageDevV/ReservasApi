@@ -149,9 +149,9 @@ namespace Application.Services
             return reservas;
         }
 
-        public IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco)
+        public IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco, int idSolicitante)
         {
-            var reservas = _reservaRepository.BuscarTodasReservasAprovadasPorBloco(bloco);
+            var reservas = _reservaRepository.BuscarTodasReservasAprovadasPorBloco(bloco, idSolicitante);
 
             foreach (var reserva in reservas)
             {
@@ -163,9 +163,9 @@ namespace Application.Services
             return reservas;
         }
 
-        public IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco)
+        public IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco, int idSolicitante)
         {
-            var reservas = _reservaRepository.BuscarTodasReservasReprovadasPorBloco(bloco);
+            var reservas = _reservaRepository.BuscarTodasReservasReprovadasPorBloco(bloco, idSolicitante);
 
             foreach (var reserva in reservas)
             {

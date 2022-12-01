@@ -18,12 +18,12 @@ namespace Data.Repository
 
             if (bloco is null)
             {
-                query = @$"SELECT * FROM Sala s
+                query = @$"SELECT s.Id, s.Status, s.Descricao FROM Sala s
                          WHERE s.Status = {((int)SalaStatus.NaoReservado)}";
                 return _dapperConfig.Query(query);
             }
 
-            query = $@"SELECT * FROM Sala s 
+            query = $@"SELECT s.Id, s.Status, s.Descricao FROM Sala s 
                       INNER JOIN Bloco b ON b.Id = s.IdBloco 
                       WHERE b.Nome = @Nome
                       AND s.Status = {((int)SalaStatus.NaoReservado)} ";
