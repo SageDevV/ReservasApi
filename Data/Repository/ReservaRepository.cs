@@ -147,7 +147,7 @@ namespace Data.Repository
 
             if (bloco is not null)
             {
-                query = $@"SELECT r.[Status], r.PeriodoReserva FROM Reservas r
+                query = $@"SELECT r.[Status], r.PeriodoReserva, r.IdSala  FROM Reservas r
                             INNER JOIN Sala s on s.Id = r.IdSala 
                             INNER JOIN Bloco b on b.Id =  s.IdBloco
                             WHERE r.Status = {((int)ReservaStatus.AguardandoAprovacao)}
@@ -156,7 +156,7 @@ namespace Data.Repository
             }
             else
             {
-                query = $@"SELECT * FROM Reservas r
+                query = $@"SELECT r.[Status], r.PeriodoReserva, r.IdSala FROM Reservas r
                            WHERE r.Status = {((int)ReservaStatus.AguardandoAprovacao)}
                            AND r.IdSolicitante = @IdSolicitante";
             }
