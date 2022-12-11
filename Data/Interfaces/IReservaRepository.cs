@@ -14,6 +14,6 @@ namespace Data.Interfaces
         IEnumerable<Reserva> BuscarTodasReservasAprovadasPorBloco(string? bloco, int idSolicitante);
         IEnumerable<Reserva> BuscarTodasReservasReprovadasPorBloco(string? bloco, int idSolicitante);
         IEnumerable<Reserva> BuscarTodasReservasCriadasPeloSolicitante(int idSolicitante, string? bloco);
-
+        IEnumerable<Reserva> BuscarTodasReservasPendenteDeAprovacao();
     }
 }

@@ -169,5 +169,13 @@ namespace Data.Repository
 
             return _dapperConfig.Query(query, param);
         }
+
+        public IEnumerable<Reserva> BuscarTodasReservasPendenteDeAprovacao()
+        {
+            string query = $@"SELECT * FROM RESERVAS r
+                            WHERE r.Status = {((int)ReservaStatus.AguardandoAprovacao)}";
+
+            return _dapperConfig.Query(query);
+        }
     }
 }

@@ -190,5 +190,19 @@ namespace Application.Services
 
             return reservas;
         }
+
+        public IEnumerable<Reserva> BuscarTodasReservasPendenteDeAprovacao()
+        {
+            var reservas = _reservaRepository.BuscarTodasReservasPendenteDeAprovacao();
+
+            foreach (var reserva in reservas)
+            {
+                string[] periodoReserva = reserva.PeriodoReserva.Split('=');
+                reserva.Data = periodoReserva[0];
+                reserva.RangeHora = periodoReserva[1];
+            }
+
+            return reservas;
+        }
     }
 }
